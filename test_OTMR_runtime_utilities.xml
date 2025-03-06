@@ -1,0 +1,14 @@
+<ServiceRecipe Version="00.00.01" Name="TEST_OTMR_utilities" Description="TEST_OTMR_utilities">
+    <Protocols>
+        <Protocol Name="TEST_OTMR_utilities">
+            <PythonScript Path='/scripts/OTMR_scripts/_OTMR_setup.py' />
+            <PythonScript Path='/scripts/OTMR_scripts/_OTMR_cleanup.py' />
+        </Protocol>
+    </Protocols>
+</ServiceRecipe>
+
+
+
+
+
+
