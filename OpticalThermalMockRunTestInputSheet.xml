@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<InputSheet xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Metadatas>
+    <Metadata Name="Version">0.1</Metadata>
+    <Metadata Name="Type">Manufacturing</Metadata>
+    <Metadata Name="DocumentNumber">XXXXXXXXXXX</Metadata>
+  </Metadatas>
+  <Parameters>
+    <Parameter Name="NumberOfCycles" ValueType="Integer">
+      <Value>3</Value>
+      <Metadatas>
+        <Metadata Name="StandardName">NumberOfCycles</Metadata>
+      </Metadatas>
+    </Parameter>
+    <Parameter Name="RecipeNameWithoutExtension" ValueType="String">
+      <Value>OpticalThermalMockRunTestRecipe</Value>
+      <Metadatas>
+        <Metadata Name="StandardName">RecipeNameWithoutExtension</Metadata>
+      </Metadatas>
+    </Parameter>
+  </Parameters>
+  <Specifications>
+    <Specification Name="MagnitudeOfMonkeyMagic" DisplayName="MagnitudeOfMonkeyMagic_INS (MoMM)" DecimalPlaces="0" UnitOfMeasure="MoMM">
+      <Min>1</Min>
+      <Max>1</Max>
+    </Specification>
+  </Specifications>
+</InputSheet>

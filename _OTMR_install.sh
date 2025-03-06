@@ -4,9 +4,9 @@
 #!/bin/bash
 
 # Set variables
-REPO_URL="<repository_url>"
-FILE_PATH="<path_to_file_in_repo>"
-OUTPUT_PATH="<desired_output_path>"
+REPO_URL="https://github.com/srw8/Celeste_Top_Descriptor"
+FILE_PATH="CelesteTopUT.flowcell"
+OUTPUT_PATH=$(pwd)
 BRANCH="main" # Default branch
 
 # Check if branch is provided as an argument
