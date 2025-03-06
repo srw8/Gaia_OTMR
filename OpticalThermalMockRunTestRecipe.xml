@@ -1,0 +1,87 @@
+<ManufacturingRecipe Version="00.00.02" Name="OTMR 1.5 Recipe" Description="OTMR 1.5 Recipe">
+    <Protocols>
+        <Protocol Name="OptoThermal Mock Run v1.5">
+            <NamedEvent EventName="StartPrimaryAnalysis"/>
+            <TempSettle Zones ="FlowCellHeater" Temperature ="30 C" Tolerance="1.0 C" RampRate="2 C/s" SettleTime ="30 s" Timeout="100 s"/>
+            <Wait Duration="35 s" />
+            <ImagingRef ImagingName="Prep Imaging"/>
+            <ImagingRef ImagingName="Dump LLD Buffer"/>
+            <ReadRef ReadName="Read" />
+            <Wait Duration="300 s" Name="Wait for RTA"/>
+            <TempOff Zones ="FlowCellHeater" />
+        </Protocol>
+    </Protocols>
+
+    <ReadDefinitions>
+        <ReadDefinition Name="Read">
+            <CycleStepCollection Name="Cycles" Cycles="read1cycles">
+                <ChemistryRef ChemistryName="Thermal Cycle"/>
+                <ImagingRef ImagingName="Imaging with Autofocus"/> 
+                <ImagingRef ImagingName="Dump LLD Buffer" />
+            </CycleStepCollection>
+        </ReadDefinition>
+    </ReadDefinitions>
+
+    <ChemistryDefinitions>
+        
+        <ChemistryDefinition Name="Thermal Cycle">
+            <TempSettle Zones ="FlowCellHeater" Temperature ="40 C" Tolerance="1.0 C" RampRate="2 C/s" SettleTime ="30 s" Timeout="60 s"/> 
+            <Wait Duration="2 s" />
+            <TempSettle Zones ="FlowCellHeater" Temperature ="60 C" Tolerance="1.0 C" RampRate="2 C/s" SettleTime ="30 s" Timeout="60 s"/> 
+            <Wait Duration="2 s" />
+            <TempSettle Zones ="FlowCellHeater" Temperature ="30 C" Tolerance="1.0 C" RampRate="2 C/s" SettleTime ="30 s" Timeout="60 s"/> 
+        </ChemistryDefinition>
+    
+
+    </ChemistryDefinitions>
+
+    <ImagingDefinitions>
+
+        <ImagingDefinition Name="Prep Imaging">
+            <MoveToFeature Feature="AutoDetiltGroup11" />
+            <AutoDetilt />
+            <MoveToFeature Feature="AutoDetiltGroup11" />
+            <FindSurface Surface="Top" />
+            <AutoCenterLineScan Surface="Top" AnalysisChannelPower="50 mW"/>
+            <MoveToFeature Feature="Lane1Pinholes1.0umDiameter3umPitch" />
+            <FindSurface Surface="Top" />
+            <SurfacePrep Surface="Top" />
+            <Autofocus Surface="Top" />
+            <AdvancedFocusModelGeneration Name="AdvancedFocusModelGeneration" Surface="Top" SSSeparation="3" NumSSAboveBelow="7" UseCurrentXy="false" ScanSpeed="60 mm/s" LaserPower="1,000 mW"/>
+            <MoveToFeature Feature="AutoDetiltGroup11" />
+            <AutoDetilt/>
+        </ImagingDefinition>
+        
+        <ImagingDefinition Name="Imaging with Autofocus">
+            <MoveToFeature Feature="AutoDetiltGroup11" />
+            <FindSurface Surface="Top" />
+            <SurfacePrep Surface="Top" />
+            <Autofocus Surface="Top" />
+            <TdiScan ScanType="BiDiTopDownLeftRight" RetrieveLines="false" LightSource1Power="1000 mW" />
+        </ImagingDefinition>
+
+        <ImagingDefinition Name="Dump LLD Buffer">    
+            <PythonScript  Path='/scripts/firmware-scripts/lldcollector/lld_collector.py' Params='--sub CoolantPump.LLD_SLB.PCA --ip 169.254.19.55'  />
+            <PythonScript  Path='/scripts/firmware-scripts/lldcollector/lld_collector.py' Params='--sub Current.LLD_SLB.PCA --ip 169.254.19.55'  />
+            <PythonScript  Path='/scripts/firmware-scripts/lldcollector/lld_collector.py' Params='--sub Current.LLD_IMB.PCA --ip 169.254.68.216'  />
+            <PythonScript  Path='/scripts/firmware-scripts/lldcollector/lld_collector.py' Params='--sub Fans.LLD_SRB.PCA --ip 169.254.229.28'  />
+            <PythonScript  Path='/scripts/firmware-scripts/lldcollector/lld_collector.py' Params='--sub FCTEC.LLD_SLB.PCA.A --ip 169.254.19.55'  />
+            <PythonScript  Path='/scripts/firmware-scripts/lldcollector/lld_collector.py' Params='--sub FCTEC.LLD_SLB.PCA.B --ip 169.254.19.55'  />
+            <PythonScript  Path='/scripts/firmware-scripts/lldcollector/lld_collector.py' Params='--sub FocusTracking.LLD_IMB --ip 169.254.68.216'  />
+            <PythonScript  Path='/scripts/firmware-scripts/lldcollector/lld_collector.py' Params='--sub TDICamTEC.LLD_IMB.PCA --ip 169.254.68.216'  />
+            <PythonScript  Path='/scripts/firmware-scripts/lldcollector/lld_collector.py' Params='--sub Thermal.LLD_IMB.PCA --ip 169.254.68.216'  />
+            <PythonScript  Path='/scripts/firmware-scripts/lldcollector/lld_collector.py' Params='--sub Thermal.LLD_SLB.PCA --ip 169.254.19.55'  />
+            <PythonScript  Path='/scripts/firmware-scripts/lldcollector/lld_collector.py' Params='--sub Thermal.LLD_SRB.PCA --ip 169.254.229.28'  />
+            <PythonScript  Path='/scripts/firmware-scripts/lldcollector/lld_collector.py' Params='--sub TipTiltFront.LLD_FCD.PCA --ip 169.254.162.115'  />
+            <PythonScript  Path='/scripts/firmware-scripts/lldcollector/lld_collector.py' Params='--sub TipTiltRear.LLD_FCD.PCA --ip 169.254.162.115'  />
+            <PythonScript  Path='/scripts/firmware-scripts/lldcollector/lld_collector.py' Params='--sub Voltages.LLD_SLB.PCA --ip 169.254.19.55'  />
+            <PythonScript  Path='/scripts/firmware-scripts/lldcollector/lld_collector.py' Params='--sub Vacuum.LLD_SLB.PCA.A --ip 169.254.19.55'  />
+            <PythonScript  Path='/scripts/firmware-scripts/lldcollector/lld_collector.py' Params='--sub Vacuum.LLD_SLB.PCA.B --ip 169.254.19.55'  />
+            <PythonScript  Path='/scripts/firmware-scripts/lldcollector/lld_collector.py' Params='--sub Voltages.LLD_IMB.PCA --ip 169.254.68.216'  />
+            <PythonScript  Path='/scripts/firmware-scripts/lldcollector/lld_collector.py' Params='--sub xStage.LLD_IMB.PCA --ip 169.254.68.216'  />
+            <PythonScript  Path='/scripts/firmware-scripts/lldcollector/lld_collector.py' Params='--sub yStage.LLD_FCD.PCA --ip 169.254.162.115'  />
+            <PythonScript  Path='/scripts/firmware-scripts/lldcollector/lld_collector.py' Params='--sub zStage.LLD_IMB.PCA --ip 169.254.68.216'  />
+        </ImagingDefinition>
+
+    </ImagingDefinitions>
+</ManufacturingRecipe>
